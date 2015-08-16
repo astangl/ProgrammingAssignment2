@@ -1,16 +1,17 @@
-## Pair of function that compute/cache the inverse of a matrix.
+## Pair of functions that compute/cache the inverse of a matrix.
+## (Or, more generally, computes/caches the result of the solve() function.)
 
 ## This function creates a special "matrix" object that can cache its inverse.
 makeCacheMatrix <- function(x = matrix()) {
 	s <- NULL
-	setMatrix <- function(y) {
+	set <- function(y) {
 		x <<- y
 		s <<- NULL
 	}
-	getMatrix <- function() x
+	get <- function() x
 	setSolve <- function(sol) s <<- sol
 	getSolve <- function() s
-	list(setMatrix = setMatrix, getMatrix = getMatrix,
+	list(set = set, get = get,
 	     setSolve = setSolve, getSolve = getSolve)
 
 }
@@ -27,7 +28,7 @@ cacheSolve <- function(x, ...) {
 		message("getting cached data")
 		return(s)
 	}
-	data <- x$getMatrix()
+	data <- x$get()
 	s <- solve(data, ...)
 	x$setSolve(s)
 	s
